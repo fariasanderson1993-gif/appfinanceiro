@@ -50,7 +50,6 @@ const benefits = [
   "Filtros por mês, categoria e busca por descrição",
   "Interface responsiva para celular e desktop",
   "Dados sincronizados em tempo real",
-  "100% gratuito para começar",
 ];
 
 export default function LandingPage() {
@@ -63,7 +62,7 @@ export default function LandingPage() {
             <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
               <TrendingUp className="w-4 h-4 text-primary-foreground" />
             </div>
-            <span className="font-bold text-lg tracking-tight">FinançaApp</span>
+            <span className="font-bold text-lg tracking-tight">FinanSee</span>
           </div>
           <div className="flex items-center gap-3">
             <Link href="/login">
@@ -72,7 +71,7 @@ export default function LandingPage() {
               </Button>
             </Link>
             <Link href="/register">
-              <Button size="sm">Criar conta grátis</Button>
+              <Button size="sm">Criar conta</Button>
             </Link>
           </div>
         </div>
@@ -96,7 +95,7 @@ export default function LandingPage() {
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link href="/register">
             <Button size="lg" className="w-full sm:w-auto gap-2 h-12 px-8 text-base">
-              Começar gratuitamente
+              Começar agora
               <ArrowRight className="w-4 h-4" />
             </Button>
           </Link>
@@ -178,7 +177,7 @@ export default function LandingPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-3xl font-bold tracking-tight mb-4">
-                Por que usar o FinançaApp?
+                Por que usar o FinanSee?
               </h2>
               <p className="text-muted-foreground mb-8 leading-relaxed">
                 Desenvolvido para pessoas que querem sair do caos financeiro e ter
@@ -195,12 +194,12 @@ export default function LandingPage() {
             </div>
             <div className="bg-background border border-border rounded-2xl p-8 shadow-sm">
               <div className="text-center mb-6">
-                <h3 className="text-xl font-bold mb-1">Crie sua conta grátis</h3>
+                <h3 className="text-xl font-bold mb-1">Crie sua conta</h3>
                 <p className="text-sm text-muted-foreground">Comece em menos de 1 minuto</p>
               </div>
               <Link href="/register" className="block">
                 <Button className="w-full h-11 text-base gap-2">
-                  Criar conta grátis
+                  Criar conta
                   <ArrowRight className="w-4 h-4" />
                 </Button>
               </Link>
@@ -222,10 +221,10 @@ export default function LandingPage() {
             <div className="w-6 h-6 bg-primary rounded-md flex items-center justify-center">
               <TrendingUp className="w-3 h-3 text-primary-foreground" />
             </div>
-            <span className="font-semibold text-sm">FinançaApp</span>
+            <span className="font-semibold text-sm">FinanSee</span>
           </div>
           <p className="text-xs text-muted-foreground">
-            © 2024 FinançaApp. Controle suas finanças com simplicidade.
+            © 2024 FinanSee. Controle suas finanças com simplicidade.
           </p>
         </div>
       </footer>

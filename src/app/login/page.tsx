@@ -46,7 +46,7 @@ export default function LoginPage() {
             <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
               <TrendingUp className="w-5 h-5 text-primary-foreground" />
             </div>
-            <span className="font-bold text-xl">FinançaApp</span>
+            <span className="font-bold text-xl">FinanSee</span>
           </Link>
           <h1 className="text-2xl font-bold tracking-tight">Bem-vindo de volta</h1>
           <p className="text-muted-foreground mt-1 text-sm">
@@ -103,7 +103,7 @@ export default function LoginPage() {
           <p className="text-center text-sm text-muted-foreground mt-6">
             Não tem uma conta?{" "}
             <Link href="/register" className="text-primary hover:underline font-medium">
-              Criar conta grátis
+              Criar conta
             </Link>
           </p>
         </div>

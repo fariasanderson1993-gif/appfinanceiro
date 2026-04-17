@@ -50,7 +50,7 @@ export default function RegisterPage() {
     }
 
     toast.success("Conta criada com sucesso!", {
-      description: "Você já pode começar a usar o FinançaApp.",
+      description: "Você já pode começar a usar o FinanSee.",
     });
     router.push("/dashboard");
     router.refresh();
@@ -65,9 +65,9 @@ export default function RegisterPage() {
             <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
               <TrendingUp className="w-5 h-5 text-primary-foreground" />
             </div>
-            <span className="font-bold text-xl">FinançaApp</span>
+            <span className="font-bold text-xl">FinanSee</span>
           </Link>
-          <h1 className="text-2xl font-bold tracking-tight">Criar conta grátis</h1>
+          <h1 className="text-2xl font-bold tracking-tight">Criar conta</h1>
           <p className="text-muted-foreground mt-1 text-sm">
             Comece a controlar suas finanças agora
           </p>
@@ -129,7 +129,7 @@ export default function RegisterPage() {
 
             <Button type="submit" className="w-full h-11 text-base" disabled={loading}>
               {loading && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
-              {loading ? "Criando conta..." : "Criar conta grátis"}
+              {loading ? "Criando conta..." : "Criar conta"}
             </Button>
           </form>
 

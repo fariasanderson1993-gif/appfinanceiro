@@ -78,7 +78,8 @@ export function TransactionForm({
       return;
     }
 
-    const amount = parseFloat(form.amount.replace(",", "."));
+    // Formato BR: remove pontos de milhar, troca vírgula decimal por ponto
+    const amount = parseFloat(form.amount.replace(/\./g, "").replace(",", "."));
     if (isNaN(amount) || amount <= 0) {
       toast.error("Valor inválido");
       return;
