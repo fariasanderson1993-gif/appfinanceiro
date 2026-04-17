@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { TrendingUp, Eye, EyeOff, Loader2 } from "lucide-react";
@@ -10,37 +10,72 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-export default function LoginPage() {
+export default function ResetPasswordPage() {
   const router = useRouter();
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    const supabase = createClient();
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
+      if (event === "PASSWORD_RECOVERY") {
+        setReady(true);
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, []);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setLoading(true);
 
+    if (password !== confirmPassword) {
+      toast.error("As senhas não coincidem");
+      return;
+    }
+
+    if (password.length < 6) {
+      toast.error("A senha deve ter pelo menos 6 caracteres");
+      return;
+    }
+
+    setLoading(true);
     const supabase = createClient();
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    const { error } = await supabase.auth.updateUser({ password });
 
     if (error) {
-      toast.error("Erro ao fazer login", {
-        description: "E-mail ou senha incorretos. Tente novamente.",
-      });
+      toast.error("Erro ao redefinir senha", { description: error.message });
       setLoading(false);
       return;
     }
 
-    toast.success("Login realizado com sucesso!");
+    toast.success("Senha redefinida com sucesso!");
     router.push("/dashboard");
     router.refresh();
+  }
+
+  if (!ready) {
+    return (
+      <div className="min-h-screen bg-muted/30 flex items-center justify-center p-4">
+        <div className="w-full max-w-md text-center space-y-4">
+          <Loader2 className="w-8 h-8 animate-spin mx-auto text-muted-foreground" />
+          <p className="text-sm text-muted-foreground">Verificando link de recuperação...</p>
+          <p className="text-xs text-muted-foreground">
+            Se esta página não carregar, o link pode ter expirado.{" "}
+            <Link href="/forgot-password" className="text-primary hover:underline">
+              Solicitar novo link
+            </Link>
+          </p>
+        </div>
+      </div>
+    );
   }
 
   return (
     <div className="min-h-screen bg-muted/30 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
-        {/* Logo */}
         <div className="text-center mb-8">
           <Link href="/" className="inline-flex items-center gap-2 mb-6">
             <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
@@ -48,48 +83,25 @@ export default function LoginPage() {
             </div>
             <span className="font-bold text-xl">FinanSee</span>
           </Link>
-          <h1 className="text-2xl font-bold tracking-tight">Bem-vindo de volta</h1>
+          <h1 className="text-2xl font-bold tracking-tight">Nova senha</h1>
           <p className="text-muted-foreground mt-1 text-sm">
-            Entre na sua conta para continuar
+            Escolha uma nova senha para sua conta
           </p>
         </div>
 
-        {/* Card */}
         <div className="bg-card border border-border rounded-2xl p-8 shadow-sm">
           <form onSubmit={handleSubmit} className="space-y-5">
             <div className="space-y-1.5">
-              <Label htmlFor="email">E-mail</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="seu@email.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                autoComplete="email"
-                className="h-11"
-              />
-            </div>
-
-            <div className="space-y-1.5">
-              <div className="flex items-center justify-between">
-                <Label htmlFor="password">Senha</Label>
-                <Link
-                  href="/forgot-password"
-                  className="text-xs text-primary hover:underline"
-                >
-                  Esqueceu a senha?
-                </Link>
-              </div>
+              <Label htmlFor="password">Nova senha</Label>
               <div className="relative">
                 <Input
                   id="password"
                   type={showPassword ? "text" : "password"}
-                  placeholder="••••••••"
+                  placeholder="Mínimo 6 caracteres"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  autoComplete="current-password"
+                  autoComplete="new-password"
                   className="h-11 pr-10"
                 />
                 <button
@@ -102,18 +114,25 @@ export default function LoginPage() {
               </div>
             </div>
 
+            <div className="space-y-1.5">
+              <Label htmlFor="confirmPassword">Confirmar nova senha</Label>
+              <Input
+                id="confirmPassword"
+                type={showPassword ? "text" : "password"}
+                placeholder="Repita a nova senha"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+                autoComplete="new-password"
+                className="h-11"
+              />
+            </div>
+
             <Button type="submit" className="w-full h-11 text-base" disabled={loading}>
               {loading && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
-              {loading ? "Entrando..." : "Entrar"}
+              {loading ? "Salvando..." : "Salvar nova senha"}
             </Button>
           </form>
-
-          <p className="text-center text-sm text-muted-foreground mt-6">
-            Não tem uma conta?{" "}
-            <Link href="/register" className="text-primary hover:underline font-medium">
-              Criar conta
-            </Link>
-          </p>
         </div>
       </div>
     </div>
